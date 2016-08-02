@@ -1,0 +1,12 @@
+%h3#equation.alert.alert-info.text-center.hidden
+  #liner_equation.hidden
+    = render 'home/result/liner_equation'
+  #quadratic_equation.hidden
+    = render 'home/result/quadratic_equation'
+%h3 Result
+.progress.hidden
+  .progress-bar.progress-bar-striped.active{ role: 'progressbar',
+  style: 'width: 0%' }
+%h3#result.alert.alert-success.hidden
+%h3#error.hidden
+  = render 'home/result/error'

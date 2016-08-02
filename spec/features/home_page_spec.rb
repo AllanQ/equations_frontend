@@ -14,6 +14,4 @@ feature 'home page' do
     expect(page).to have_content('Input the parameters of the solution')
     expect(page).to have_content('Result')
   end
-
-
 end

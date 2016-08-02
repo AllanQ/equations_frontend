@@ -1,6 +1,0 @@
-progress = ->
-  $('.input').keyup ->
-
-$ (->
-  progress()
-)

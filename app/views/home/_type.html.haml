@@ -1,0 +1,16 @@
+%h3 Select the type of equation
+#radio
+  .form-group.radio
+    .row
+      .col-md-3.r
+        = radio_button_tag :type, 'linear', true
+        = label_tag :type_linear, 'linear'
+      .col-md-4
+        = render 'home/type/liner_examle'
+  .form-group.radio
+    .row
+      .col-md-3.r
+        = radio_button_tag :type, 'quadratic'
+        = label_tag :type_quadratic, 'quadratic'
+      .col-md-4
+        = render 'home/type/quadratic_example'

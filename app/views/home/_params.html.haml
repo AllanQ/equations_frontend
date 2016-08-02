@@ -1,0 +1,13 @@
+%h3 Input the parameters of the solution
+#a-group.form-group.form-inline
+  = label_tag :a, 'a'
+  = number_field_tag :a, nil, class: 'input form-control', dataindex: '1'
+  = render 'home/params/alert'
+#b-group.form-group.form-inline
+  = label_tag :b, 'b'
+  = number_field_tag :b, nil, class: 'input form-control', dataindex: '2'
+  = render 'home/params/alert'
+#c-group.form-group.form-inline
+  = label_tag :c, 'c'
+  = number_field_tag :c, nil, class: 'input form-control', dataindex: '3'
+  = render 'home/params/alert'

@@ -4,11 +4,7 @@ xfeature 'validation' do
   context 'incorrect input' do
     scenario 'test' do
       visit('/')
-      fill_in('#a', with: '12345')
       fill_in('a', with: '12345')
-      fill_in 'a', :with => '12345'
-      # find('a').set('12345')
-      find('#a').set('12345')
 
       expect(page).to have_content('12345')
     end

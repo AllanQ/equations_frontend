@@ -39,18 +39,13 @@ calculate_progress = ->
     $('#c-group').addClass('hidden')
     total = 45*(count_a + count_b) + 10*count_res
     if total >= 90
-      $('#liner_equation').removeClass('hidden')
-      $('#li-a').text(a)
-      $('#li-b').text(b)
+      display_liner_equation(a, b)
       send_form(type, a, b)
   else
     $('#c-group').removeClass('hidden')
     total = 30*(count_a + count_b + count_c) + 10*count_res
     if total >= 90
-      $('#quadratic_equation').removeClass('hidden')
-      $('#quadr-a').text(a)
-      $('#quadr-b').text(b)
-      $('#quadr-c').text(c)
+      display_quadratic_equation(a, b, c)
       send_form(type, a, b, c)
   $('.progress').removeClass('hidden')
   $('.progress-bar').css('width', total + '%')
@@ -66,6 +61,17 @@ bool_correct_input =(field) ->
   val = field.val()
   !(val == null || val == '' || field.parent().hasClass('has-error'))
 
+display_liner_equation =(a, b) ->
+  $('#liner_equation').removeClass('hidden')
+  $('#li-a').text(a)
+  $('#li-b').text(b)
+  
+display_quadratic_equation =(a, b, c) ->
+  $('#quadratic_equation').removeClass('hidden')
+  $('#quadr-a').text(a)
+  $('#quadr-b').text(b)
+  $('#quadr-c').text(c)  
+  
 send_form =(type, a, b, c = null) ->
   $.ajax("/equations", {
     type: 'POST',

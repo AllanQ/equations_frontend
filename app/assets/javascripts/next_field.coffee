@@ -1,5 +1,5 @@
 next_field = ->
-  $('.input').on('keydown', 'input', (e)->
+  $('#form').on('keydown', 'input', (e)->
     if e.which == 13
       index = parseFloat($(@).attr('dataindex'))
       value = $(@).val()

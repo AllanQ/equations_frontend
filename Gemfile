@@ -10,7 +10,7 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 gem 'haml-rails', '~> 0.9'
 gem 'bootstrap-sass', '~> 3.3.6'
-
+gem 'gon'
 
 group :development, :test do
   gem 'byebug', platform: :mri

@@ -42,13 +42,13 @@ calculate_progress = ->
     total = 45*(count_a + count_b) + 10*count_res
     if total >= 90
       display_liner_equation(a, b)
-      send_form(type, a, b)
+      compute_signature(type, a, b, c)
   else
     $('#c-group').removeClass('hidden')
     total = 30*(count_a + count_b + count_c) + 10*count_res
     if total >= 90
       display_quadratic_equation(a, b, c)
-      send_form(type, a, b, c)
+      compute_signature(type, a, b, c)
   $('.progress').removeClass('hidden')
   $('.progress-bar').css('width', total + '%')
 
@@ -72,55 +72,78 @@ display_quadratic_equation =(a, b, c) ->
   $('#quadratic_equation').removeClass('hidden')
   $('#quadr-a').text(a)
   $('#quadr-b').text(b)
-  $('#quadr-c').text(c)  
-  
-send_form =(type, a, b, c = null) ->
-  $.ajax('http://localhost:4567', {
+  $('#quadr-c').text(c)
+
+compute_signature =(type, a, b, c = null) ->
+  $.ajax("/equations", {
     type: 'POST',
-    dataType: 'json',
-    contentType: 'application/json; charset=utf-8',
-    data: JSON.stringify({ 'type': type, 'a': a, 'b': b, 'c': c }),
-    success: (result) ->
-      on_success(result)
-    error: (jqXHR, textStatus, errorThrown) ->
-      on_error(jqXHR)
+    data: { home: { 'type': type, 'a': a, 'b': b, 'c': c } }
   })
-  $('#equation').removeClass('hidden')
 
-on_success =(result) ->
-  x1 = result.x1
-  if x1.match(/error/i)
-    show_error(x1)
-  else
-    x2 = result.x2
-    if x2 == '' || x2 == null
-      if x1.match(/^-?\d+.?\d*$/)
-        if isStrInt(x1) then x1 = parseInt(x1)
-        res = "x = #{x1}"
-      else
-        res = x1
-    else
-      if isStrInt(x1) then x1 = parseInt(x1)
-      if isStrInt(x2) then x2 = parseInt(x2)
-      res = "x1 = #{x1},<br>x2 = #{x2}"
-    $('#result').removeClass('hidden')
-    $('#result').html(res)
-    $('.progress').addClass('hidden')
-
-isStrInt =(str) ->
-  parseFloat(str) % 1 == 0
-
-on_error =(jqXHR) ->
-  if jqXHR.status == 500
-    err_text = 'Sorry. Service out of work. Internal Server Error. Try later'
-  else
-    err_text = 'Sorry. Error'
-  show_error(err_text)
-
-show_error =(text) ->
-  $('#error').removeClass('hidden')
-  $('#error-message').text(text)
-  $('.progress').addClass('hidden')
+#compute_signature =(type, a, b, c, uri) ->
+#  $.ajax("home/sign", {
+#    type: 'GET',
+#    data: { home: { 'type': type, 'a': a, 'b': b, 'c': c, 'uri': uri } },
+#    dataType: 'json',
+#    success: (result) ->
+#      signature = result.signature
+#      console.log(signature)
+#      return signature
+#  })
+#
+#send_form =(type, a, b, c = null) ->
+#  uri = '/'
+#  signature = compute_signature(type, a, b, c, uri)
+#  console.log(signature)
+#  public_key = $('#public_key').val()
+#  console.log(public_key)
+#  all_parms = { 'type': type, 'a': a, 'b': b, 'c': c }
+#  $.ajax 'http://localhost:4567' + uri,
+#    headers: { 'Public_key': public_key, 'Signature': signature }
+#    type: 'POST',
+#    dataType: 'json',
+#    contentType: 'application/json; charset=utf-8',
+#    data: JSON.stringify(all_parms),
+#    success: (result) ->
+#      on_success(result)
+#    error: (jqXHR, textStatus, errorThrown) ->
+#      on_error(jqXHR)
+#  $('#equation').removeClass('hidden')
+#
+#on_success =(result) ->
+#  x1 = result.x1
+#  if x1.match(/error/i)
+#    show_error(x1)
+#  else
+#    x2 = result.x2
+#    if x2 == '' || x2 == null
+#      if x1.match(/^-?\d+.?\d*$/)
+#        if isStrInt(x1) then x1 = parseInt(x1)
+#        res = "x = #{x1}"
+#      else
+#        res = x1
+#    else
+#      if isStrInt(x1) then x1 = parseInt(x1)
+#      if isStrInt(x2) then x2 = parseInt(x2)
+#      res = "x1 = #{x1},<br>x2 = #{x2}"
+#    $('#result').removeClass('hidden')
+#    $('#result').html(res)
+#    $('.progress').addClass('hidden')
+#
+#isStrInt =(str) ->
+#  parseFloat(str) % 1 == 0
+#
+#on_error =(jqXHR) ->
+#  if jqXHR.status == 500
+#    err_text = 'Sorry. Service out of work. Internal Server Error. Try later'
+#  else
+#    err_text = 'Sorry. Error'
+#  show_error(err_text)
+#
+#show_error =(text) ->
+#  $('#error').removeClass('hidden')
+#  $('#error-message').text(text)
+#  $('.progress').addClass('hidden')
 
 $ (->
   calculate_progress()

@@ -1,3 +1,4 @@
 Rails.application.routes.draw do
-  root to: 'home#index'
+  resources :equations, only: [:index, :create]
+  root 'equations#index'
 end

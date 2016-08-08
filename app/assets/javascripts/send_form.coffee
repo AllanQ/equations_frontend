@@ -1,4 +1,4 @@
-window.send_form =(type, a, b, c, url, authorization) ->
+window.send_form = ->
   type = $('input[name="type"]:checked', '#radio').val()
   a = $('#a').val()
   b = $('#b').val()

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
-  resources :equations, only: [:index, :create]
+  get 'equations/index'
+  get 'equations/auth'
   root 'equations#index'
 end

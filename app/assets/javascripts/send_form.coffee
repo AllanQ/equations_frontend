@@ -52,3 +52,4 @@ show_error =(text) ->
   $('#error').removeClass('hidden')
   $('#error-message').text(text)
   $('.progress').addClass('hidden')
+  

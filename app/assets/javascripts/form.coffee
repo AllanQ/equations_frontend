@@ -75,8 +75,8 @@ display_quadratic_equation =(a, b, c) ->
   $('#quadr-c').text(c)
 
 compute_signature =(type, a, b, c = null) ->
-  $.ajax("/equations", {
-    type: 'POST',
+  $.ajax("/equations/auth", {
+    type: 'GET',
     data: { home: { 'type': type, 'a': a, 'b': b, 'c': c } }
   })
 

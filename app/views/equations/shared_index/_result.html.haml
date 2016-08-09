@@ -1,12 +1,12 @@
 %h3#equation.alert.alert-info.text-center.hidden
   #liner_equation.hidden
-    = render 'equations/result/liner_equation'
+    = render 'equations/shared_index/result/liner_equation'
   #quadratic_equation.hidden
-    = render 'equations/result/quadratic_equation'
+    = render 'equations/shared_index/result/quadratic_equation'
 %h3 Result
 .progress.hidden
   .progress-bar.progress-bar-striped.active{ role: 'progressbar',
   style: 'width: 0%' }
 %h2#result.alert.alert-success.hidden
 %h3#error.hidden
-  = render 'equations/result/error'
+  = render 'equations/shared_index/result/error'

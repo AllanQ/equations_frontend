@@ -15,37 +15,44 @@ window.send_form = ->
     success: (result) ->
       on_success(result)
     error: (jqXHR, textStatus, errorThrown) ->
+      console.log(jqXHR)
+      console.log(textStatus)
+      console.log(errorThrown)
       on_error(jqXHR)
   $('#equation').removeClass('hidden')
 
 on_success =(result) ->
-  x1 = result.x1
-  if x1.match(/error/i)
-    show_error(x1)
+  if error = result.error
+    show_error('Sorry. Server Error. Try later')
+    console.log(error)
   else
-    x2 = result.x2
-    if x2 == '' || x2 == null
-      if x1.match(/^-?\d+.?\d*$/)
-        if isStrInt(x1) then x1 = parseInt(x1)
-        res = "x = #{x1}"
-      else
-        res = x1
+    x1 = result.x1
+    if x1.match(/error/i)
+      show_error(x1)
     else
-      if isStrInt(x1) then x1 = parseInt(x1)
-      if isStrInt(x2) then x2 = parseInt(x2)
-      res = "x1 = #{x1},<br>x2 = #{x2}"
-    $('#result').removeClass('hidden')
-    $('#result').html(res)
-    $('.progress').addClass('hidden')
+      x2 = result.x2
+      if x2 == '' || x2 == null
+        if x1.match(/^-?\d+.?\d*$/)
+          if isStrInt(x1) then x1 = parseInt(x1)
+          res = "x = #{x1}"
+        else
+          res = x1
+      else
+        if isStrInt(x1) then x1 = parseInt(x1)
+        if isStrInt(x2) then x2 = parseInt(x2)
+        res = "x1 = #{x1},<br>x2 = #{x2}"
+      $('#result').removeClass('hidden')
+      $('#result').html(res)
+      $('.progress').addClass('hidden')
 
 isStrInt =(str) ->
   parseFloat(str) % 1 == 0
 
 on_error =(jqXHR) ->
   if jqXHR.status == 500
-    err_text = 'Sorry. Service out of work. Internal Server Error. Try later'
+    err_text = 'Server Error'
   else
-    err_text = 'Sorry. Error'
+    err_text = 'Error'
   show_error(err_text)
 
 show_error =(text) ->

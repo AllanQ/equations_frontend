@@ -65,19 +65,73 @@ bool_correct_input =(field) ->
 
 display_liner_equation =(a, b) ->
   $('#liner_equation').removeClass('hidden')
-  $('#li-a').text(a)
-  $('#li-b').text(b)
-  
+  multiplier_first(a)
+  if b == '0' || b == '-0'
+    $('.free-term-block').addClass('hidden')
+  else
+    free_term(b)
+    $('.free-term-block').removeClass('hidden')
+
 display_quadratic_equation =(a, b, c) ->
   $('#quadratic_equation').removeClass('hidden')
-  $('#quadr-a').text(a)
-  $('#quadr-b').text(b)
-  $('#quadr-c').text(c)
+  multiplier_first(a)
+  if b == '0' || b == '-0'
+    $('.multiply2-block').addClass('hidden')
+  else
+    multiplier_second(b)
+    $('.multiply2-block').removeClass('hidden')
+  if c == '0' || c == '-0'
+    $('.free-term-block').addClass('hidden')
+  else
+    free_term(c)
+    $('.free-term-block').removeClass('hidden')
+
+multiplier_first =(param) ->
+  arr = multiplier(param, true)
+  $('.mul1-sign').text(arr[0])
+  $('.mul1').text(arr[1])
+  $('.mul1-multiply').text(arr[2])
+
+multiplier_second =(param) ->
+  arr = multiplier(param, false)
+  $('.mul2-sign').text(arr[0])
+  $('.mul2').text(arr[1])
+  $('.mul2-multiply').text(arr[2])
+
+multiplier =(param, first) ->
+  plus = if first then '' else '+'
+  if param < 0
+    if param == '-1'
+      sign = '-'
+      par_var = ''
+      multiply = ''
+    else
+      sign = '-'
+      par_var = -param
+      multiply = '*'
+  else
+    if param == '1'
+      sign = plus
+      par_var = ''
+      multiply = ''
+    else
+      sign = plus
+      par_var = param
+      multiply = '*'
+  [sign, par_var, multiply]
+  
+free_term =(param) ->
+  if param < 0
+    $('.free-term-sign').text('-')
+    $('.free-term').text(-param)
+  else
+    $('.free-term-sign').text('+')
+    $('.free-term').text(param)
 
 compute_signature =(type, a, b, c = null) ->
   $.ajax("/equations/auth", {
     type: 'GET',
-    data: { home: { 'type': type, 'a': a, 'b': b, 'c': c } }
+    data: { eq_params: { 'type': type, 'a': a, 'b': b, 'c': c } }
   })
 
 $ (->

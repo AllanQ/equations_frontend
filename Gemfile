@@ -15,6 +15,8 @@ gem 'bootstrap-sass', '~> 3.3.6'
 group :development, :test do
   gem 'byebug', platform: :mri
   gem 'rspec-rails', '~> 3.5'
+  gem 'rspec-context-private'
+  gem 'rails-controller-testing'
 end
 
 group :development do
@@ -27,6 +29,7 @@ end
 
 group :test do
   gem 'capybara'
+  gem 'selenium-webdriver'
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

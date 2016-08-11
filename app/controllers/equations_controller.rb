@@ -14,7 +14,7 @@ class EquationsController < ApplicationController
   private
 
   def equation_params
-    params.require(:home).permit(:type, :a, :b, :c)
+    params.require(:eq_params).permit(:type, :a, :b, :c)
   end
 
   def comprise_body

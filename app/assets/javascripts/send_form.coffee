@@ -15,9 +15,6 @@ window.send_form = ->
     success: (result) ->
       on_success(result)
     error: (jqXHR, textStatus, errorThrown) ->
-      console.log(jqXHR)
-      console.log(textStatus)
-      console.log(errorThrown)
       on_error(jqXHR)
   $('#equation').removeClass('hidden')
 
